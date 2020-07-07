@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<!-- 引入 WeUI -->
+		<title>合作单位需求反馈表</title>
+		<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.0/weui.min.css">
+		<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+		<link rel="stylesheet" href="../../css/global.css" />
+		<!-- 					<script src="../../js/util.js"></script>-->
+		<link rel="stylesheet" href="http://at.alicdn.com/t/font_1922682_b0autjedml9.css" />
+	</head>
+	<style>
+		html,body{
+			padding:0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+		label{
+			padding:0
+		}
+		.weui-label{
+			font-size: 85%;
+			/* min-width: max-content; */
+		}
+		.weui-cells__group_form .weui-cells__title {
+        padding: 16px ;
+      }
+		.weui-cell__bd {
+		font-size: 85%;
+}
+	.weui-form{
+		padding-top:0;
+	}	
+	.weui-form__text-area{
+		margin-top: 2%;
+	}
+	.weui-cells__group_form .weui-cell {
+    padding: 16px;
+}
+	.area,.way{
+		 margin-right: 20px;	
+		 width: max-content;
+		display: inline;
+	}
+	@media only screen and (min-width: 700px) {
+	.weui-cells__group_form .weui-label {
+		    min-width: max-content;
+			margin-right: 8px;
+	}
+	}
+	</style>
+	<body>
+		<!-- 使用 WeUI -->
+		<div class="page">
+			<div class="weui-form">
+				<div class="weui-form__text-area">
+					<h2 class="weui-form__title">合作单位需求反馈表</h2>
+				</div>
+				<div class="weui-form__control-area" id="form">
+					<div class="weui-cells__group weui-cells__group_form">
+						<div class="weui-cells weui-cells_form">
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label">
+										<i class="icon iconfont icon-bitian1" style="color: red;"></i>单位名称</label></div>
+								<div class="weui-cell__bd">
+									<input required class="weui-input js_input unitName" placeholder="请填写单位名称" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label">
+										<i class="icon iconfont icon-bitian1" style="color: #ffffff;"></i>地址</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input  address " placeholder="请填写地址" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label">
+										<i class="icon iconfont icon-bitian1" style="color: red;"></i>联系人</label></div>
+								<div class="weui-cell__bd">
+
+									<input class="weui-input js_input name" required placeholder="请填写联系人" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label "><i class="icon iconfont icon-bitian1" style="color: #ffffff;"></i>职务</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input  job" placeholder="请填写职务" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label">
+										<i class="icon iconfont icon-bitian1" style="color: red;"></i>手机</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input phone" required pattern="REG_tel" maxlength="11" placeholder="请输入手机号" emptyTips="请输入手机号"
+									 notMatchTips="请输入正确的手机号">
+								</div>
+								<div class="weui-cell__ft">
+									<i class="weui-icon-warn"></i>
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label"><i class="icon iconfont icon-bitian1" style="color: #ffffff;"></i>邮箱</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input email" type="email" pattern="REG_email" placeholder="请输入邮箱" notMatchTips="请输入正确的邮箱"
+									 required />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label"><i class="icon iconfont icon-bitian1" style="color: #ffffff;"></i>单位简介</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input resume " placeholder="请填写单位简介" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label"><i class="icon iconfont icon-bitian1" style="color: red;"></i>技术需求名称</label></div>
+								<div class="weui-cell__bd">
+
+									<input class="weui-input  techNeeds" required placeholder="请填写技术需求名称" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__bd" style="display: flex;flex-wrap: wrap;" id="areadivpa">
+									<p style="margin-bottom: 10px;display: block;width: 100%;"> <i class="icon iconfont icon-bitian1" style="color: red;"></i>
+										该需求所属技术领域</p>
+									<div id="areadiv">
+										<span class="area"> <input type="checkbox" name="areaValue" alue="信息与通信工程" required pattern="{1,}" tips="该需求所属技术领域" />
+											信息与通信工程</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="计算机科学与技术" /> 计算机科学与技术</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="控制科学与工程" /> 控制科学与工程</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="软件工程" /> 软件工程</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="管理科学与工程" /> 管理科学与工程</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="网络空间安全" /> 网络空间安全</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="微电子技术与专用芯片设计" /> 微电子技术与专用芯片设计</span>
+										<span class="area"> <input type="checkbox" name="areaValue" value="医疗器" /> 医疗器</span>
+										<div style="width: 100%;margin-top: 10px;">
+											<input type="checkbox" name="areaValue" class="areaValueChe" />
+											<input style=" position: relative; top: -20px;left:15px" type="text" class="weui-textarea elseTech" onblur="ChangeChec('elseTech','areaValueChe')"
+											 placeholder="请填写其他技术" maxlength="200" />
+											<div class="weui-textarea-counter"><span>0</span>/200</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label "><i class="icon iconfont icon-bitian1" style="color:#ffffff;"></i>拟投入资金额（万元）</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input  money" placeholder="请填写金额" type="number" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__hd"><label class="weui-label "><i class="icon iconfont icon-bitian1" style="color: red;"></i>技术需求描述</label></div>
+								<div class="weui-cell__bd">
+
+									<input type="text" class="weui-input js_input techDec" required placeholder="请描述你所的技术需求" maxlength="200" />
+									<div class="weui-textarea-counter"><span>0</span>/200</div>
+								</div>
+							</div>
+
+
+							<div class="weui-cell weui-cell_active">
+								<div class="weui-cell__bd js_input1" style="display: flex;flex-wrap: wrap;" id="waydivpa">
+									<p style="margin-bottom: 10px;display: block;width: 100%;">
+										<i class="icon iconfont icon-bitian1" style="color: red;"></i> 期望的合作方式</p>
+									<div id="waydiv">
+										<span class="way"> <input type="checkbox" name="wayValue" value="技术开发" required pattern="{1,}" tips="期望的合作方式" />
+											技术开发</span>
+										<span class="way"> <input type="checkbox" name="wayValue" value="计算机科学与技术" /> 计算机科学与技术</span>
+										<span class="way"> <input type="checkbox" name="wayValue" value="技术服务" /> 技术服务</span>
+										<span class="way"> <input type="checkbox" name="wayValue" value="技术入股" /> 技术入股</span>
+										<span class="way"> <input type="checkbox" name="wayValue" value="技术转让" /> 技术转让</span>
+										<span class="way"> <input type="checkbox" name="wayValue" value="共建载体" /> 共建载体</span>
+										<div style="width: 100%;margin-top: 10px;">
+											<input type="checkbox" name="wayValue" class="wayValueChe" class="weui-input "/>
+											<input weui-input style=" position: relative; top: -20px;left:15px" type="text" class="weui-textarea elseEx" onblur="ChangeChec('elseEx','wayValueChe')"
+											 placeholder="其他请说明" maxlength="200" />
+											<div class="weui-textarea-counter"><span>0</span>/200</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="weui-form__opr-area">
+					<div class="weui-form__tips-area">
+						<p class="weui-form__tips">
+							(请详细填写便于制作宣传材料)
+						</p>
+					</div>
+					<a class="weui-btn weui-btn_primary " href="javascript:" id="formSubmitBtn">确定</a>
+				</div>
+				<div class="weui-form__extra-area">
+					<div class="weui-footer">
+						<p class="weui-footer__links">
+							<a href="javascript:" class="weui-footer__link">重庆邮电大学董事处</a>
+						</p>
+						<p class="weui-footer__text">Copyright @ 2020</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			//向后台发送数据
+
+			function postMessage() {
+				var message = {};
+				message.cidname = $('.unitName')[0].value;
+				message.cidaddress = $('.address')[0].value;
+				message.author = $('.name')[0].value;
+				message.job = $('.job')[0].value;
+				message.tel = $('.phone')[0].value;
+				message.email = $('.email')[0].value;
+				message.cidmemo = $('.resume')[0].value;
+				message.needname = $('.techNeeds')[0].value;
+				message.money = $('.money')[0].value;
+				message.need = $('.techDec')[0].value;
+				var areaValue = [];
+				$("input[name='areaValue']:checked").each(
+					function() {
+						areaValue.push($(this).val())
+					}
+				);
+				if ($('.elseTech')[0].value) {
+					areaValue.push($('.elseTech')[0].value)
+				}
+				message.need_id = areaValue;
+				var wayValue = [];
+				$("input[name='wayValue']:checked").each(
+					function() {
+						wayValue.push($(this).val())
+					}
+				);
+				if ($('.elseEx')[0].value) {
+					wayValue.push($('.elseEx')[0].value)
+				}
+				message.hope = wayValue;
+
+				$.ajax({
+					type: 'POST',
+					//这里是提交需求发布的新数据
+					url: '/createfeedback',
+					data: message,
+					success: (function(res) {
+						if (res.code == 0) {
+							weui.toast('提交成功', 3000);
+						} else if (res.code == 1001) {
+							weui.alert(res.message)
+						} else if (res.code == 30001) {
+							weui.alert(res.message)
+						} else if (res.code == 30012) {
+							weui.alert(res.message)
+						} else if (res.code == 30011) {
+							weui.alert(res.message)
+						} else {
+							weui.alert("未知错误")
+						}
+					}),
+					error: (function() {
+						weui.alert('发送数据失败');
+						console.log(message)
+					}),
+
+
+				});
+			}
+			//移开鼠标,将选择框选中
+			function ChangeChec(put, che) {
+				let put1 = document.getElementsByClassName(put)[0].value;
+				let che1 = document.getElementsByClassName(che)[0];
+				console.log(put1, che1)
+				if (put1) {
+					che1.checked = "true"
+				} else {
+					che1.checked = "false"
+				}
+			}
+
+			var regexp = {
+				regexp: {
+					tel: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
+					email: /(^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+)|(^$)/,
+				}
+			};
+			weui.form.checkIfBlur('#form', regexp);
+			document.querySelector('#formSubmitBtn').addEventListener('click', function() {
+				weui.form.validate('#form', function(error) {
+					console.log(error);
+					if (!error) {
+						postMessage()
+					}
+				}, regexp);
+			});
+
+			//如果是点击查看详情页面,刚进来就要加载数据
+
+			$(function() {
+				console.log("ldkfsjgisfd")
+				var url = window.location.search;
+				var urlPa = getUrlParam(url);
+				let id={};
+				id.nid=urlPa.id;
+				let nid = JSON.stringify(id);
+				if ('id' in urlPa) {
+					//给所有的input加一个disable属性
+					$("input").attr("disabled", true).css("margin-left","4%");
+					//将button的属性成不能提交
+					$("#formSubmitBtn").addClass("weui-btn_disabled")
+					//发送ajax请求获取数据
+					//根据id获取data值,并且将值渲染到页面
+					$.ajax({
+						type: 'POST',
+						data: nid,
+						contentType: "application/json; charset=utf-8",
+						//这里是获取特定id的需求发布
+						url: '/feedback',
+						success: (function(data) {
+							if (data.code == 0) {
+								$('.unitName')[0].value = data.data[0].cidname;
+								$('.address')[0].value = data.data[0].cidaddress;
+								$('.name')[0].value = data.data[0].author;
+								$('.job')[0].value = data.data[0].job;
+								$('.phone')[0].value = data.data[0].tel;
+								$('.email')[0].value = data.data[0].email;
+								$('.resume')[0].value = data.data[0].cidmemo;
+								$('.techNeeds')[0].value = data.data[0].needname;
+								$('.money')[0].value = data.data[0].money;
+								$('.techDec')[0].value = data.data[0].need;
+								//将数字的范围去掉
+								$(".weui-textarea-counter").each(
+									function() {
+										$(this).css("display", "none");
+									}
+								);
+								//将请详细填写的也去掉
+								$(".weui-form__tips").each(
+									function() {
+										$(this).css("display", "none");
+									}
+								);
+								//将确定按钮去掉
+								$("#formSubmitBtn").css("display", "none");
+								//将两个选择框,直接替换成展示的div
+								//第一个选择的
+								let areadiv = $('#areadiv');
+								areadiv.css("display", "none");
+								var areadivNew = $('<p style="margin-left:1%">' + data.data[0].need_id + '</p>');
+								$('#areadivpa').append(areadivNew);
+								//第二个选择的
+								let waydiv = $('#waydiv')
+								waydiv.css("display", "none");
+								var waydivNew = $('<p style="margin-left:1%">' + data.data[0].hope + '</p>');
+								$('#waydivpa').append(waydivNew);
+							} else if (data.code == 1001) {
+								weui.alert(res.message)
+							} else if (data.code == 30001) {
+								weui.alert(res.message)
+							} else if (data.code == 30012) {
+								weui.alert(res.message)
+							} else if (data.code == 30011) {
+								weui.alert(res.message)
+							} else {
+								weui.alert("未知错误")
+							}
+						}),
+						error: (function() {
+							weui.alert('该条数据获取失败')
+						}),
+					});
+				}
+			})
+
+			//对url进行解析,得到一个参数数组
+			function getUrlParam(url) {
+				var params = {};
+				var search = url;
+				search = /\?/.test(search) && search.split("?")[1];
+				var searchs = /\&/.test(search) ? search.split("&") : [search];
+				for (var i = 0; i < searchs.length; i++) {
+					if (/\=/.test(searchs[i])) {
+						var item = searchs[i].split("=");
+						params[item[0]] = item[1];
+					};
+				};
+				return params;
+			};
+		</script>
+	</body>
+</html>

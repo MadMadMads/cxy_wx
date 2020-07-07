@@ -1,0 +1,37 @@
+[{
+	"author":"王雪",
+	"job":"老板",
+	"cidname":"产学研",
+	"tel":"13579956090",
+	"email":"1416047102@qq.com",
+	"content":"啦啦啦啦啦啦",
+	"type":5,
+	"id":1,
+	"unitName":"产学研",
+	"cidaddress":"重庆邮电大学",
+	"cidmemo":"这就是简介",
+	"needname":"java,html.css",
+	"need_id":"java,html.css",
+	"money":9895,
+	"hope":"66,44,55",
+	"need":"鬼知道"
+},
+{
+	"author":"王雪",
+	"job":"老板",
+	"cidname":"产学研",
+	"tel":"13579956090",
+	"email":"1416047102@qq.com",
+	"content":"我是买包的小行家",
+	"type":0,
+	"id":2,
+	"unitName":"产学研",
+	"cidaddress":"重庆邮电大学",
+	"cidmemo":"这就是简介",
+	"need_id":"java,html.css",
+	"needname":"java,html.css",
+	"money":9895,
+	"hope":"66,44,55",
+	"need":"鬼知道"
+}
+]
