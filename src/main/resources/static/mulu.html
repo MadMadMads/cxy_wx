@@ -124,8 +124,18 @@
 								sjb = $("#needul");
 								ym = 'xqfb';
 							}
-							var zixunulli = $('<li><a href="' + ym + '.html?id=' + data.data[i].nid + '"><sapn class="detail">' + data.data[i].content +
-								'</span></a><i class="icon iconfont icon-icon-test2" style="float: right;" ></i></li>');
+							//页面要显示的时间
+							let time=new Date(parseInt(data.data[i].time+'000'));
+							let date=[time.getFullYear()+'年',time.getMonth()+1+'月',time.getDate()+'日'].join('');
+							//页面要显示的状态码
+							let satus=data.data[i].status?'已读':'未读';
+							//
+							var zixunulli = $('<a href="' + ym + '.html?id=' + data.data[i].nid + '"><li>' +
+									'<sapn >' + data.data[i].content +'</span>\n' +
+									'<sapn >' + date +'</span>\n' +
+									'<sapn >' + satus+'</span>\n' +
+									'<i class="icon iconfont icon-icon-test2" style="float: right;" </i>' +
+									'</li></a>');
 							// var zixunulli=$('<p>sdaf sf</p>')
 							console.log(zixunulli)
 							sjb.append(zixunulli);

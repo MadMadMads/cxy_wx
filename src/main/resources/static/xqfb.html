@@ -223,7 +223,9 @@
 				var areaValue = [];
 				$("input[name='areaValue']:checked").each(
 					function() {
-						areaValue.push($(this).val())
+						if($(this).val()!="on") {
+							areaValue.push($(this).val())
+						}
 					}
 				);
 				if ($('.elseTech')[0].value) {
@@ -233,7 +235,9 @@
 				var wayValue = [];
 				$("input[name='wayValue']:checked").each(
 					function() {
-						wayValue.push($(this).val())
+						if ($(this).val() != "on") {
+							wayValue.push($(this).val())
+						}
 					}
 				);
 				if ($('.elseEx')[0].value) {
@@ -351,7 +355,7 @@
 								//第一个选择的
 								let areadiv = $('#areadiv');
 								areadiv.css("display", "none");
-								var areadivNew = $('<p style="margin-left:1%">' + data.data[0].need_id + '</p>');
+								var areadivNew = $('<p style="margin-left:1%">' +  data.data[0].needId + '</p>');
 								$('#areadivpa').append(areadivNew);
 								//第二个选择的
 								let waydiv = $('#waydiv')
