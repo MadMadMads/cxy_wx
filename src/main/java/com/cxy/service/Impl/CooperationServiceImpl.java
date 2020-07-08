@@ -2,6 +2,7 @@ package com.cxy.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cxy.dao.NewsMapper;
 import com.cxy.model.entity.News;
 import com.cxy.model.entity.User;
@@ -42,6 +43,12 @@ public class CooperationServiceImpl implements CooperationService {
     @Override
     public List<News> findListNews(News news) {
         QueryWrapper queryWrapper = new QueryWrapper<>(news).or(news != null).like(!StringUtils.isEmpty(news.getTitle()),"title",news.getTitle()).orderByAsc("status").orderByDesc("_time");
+        if (news != null) {
+            UpdateWrapper updateWrapper = new UpdateWrapper<>(news).or(news != null).like(!StringUtils.isEmpty(news.getTitle()),"title",news.getTitle());
+            News news1  = new News();
+            news1.setStatus((byte) 1);
+            newsMapper.update(news1,updateWrapper);
+        }
         return newsMapper.selectList(queryWrapper);
     }
 
