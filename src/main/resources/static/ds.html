@@ -199,6 +199,7 @@
 						//这里是获取特定id董事需求建议的数据
 						data: nid,
 						url: '/feedback',
+						contentType: "application/json; charset=utf-8",
 						success: (function(res) {
 							if (res.code == 0) {
 								$(".name")[0].value = res.data[0].author;

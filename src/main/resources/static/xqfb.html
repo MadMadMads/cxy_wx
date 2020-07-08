@@ -245,6 +245,7 @@
 					type: 'POST',
 					//这里是提交需求发布的新数据
 					url: '/createfeedback',
+					contentType: "application/json; charset=utf-8",
 					data: mess,
 					success: (function(res) {
 						if (res.code == 0) {
