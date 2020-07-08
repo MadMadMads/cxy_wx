@@ -170,6 +170,9 @@
 			$(function() {
 				var url = window.location.search;
 				var urlPa = getUrlParam(url);
+                let id={};
+                id.nid=urlPa.id;
+                let nid = JSON.stringify(id);
 				if ('id' in urlPa) {
 					//给所有的input加一个disable属性
 					$("input").attr("disabled", true);
@@ -194,7 +197,7 @@
 					$.ajax({
 						type: 'POST',
 						//这里是获取特定id董事需求建议的数据
-						data: urlPa.id,
+						data: nid,
 						url: '/feedback',
 						success: (function(res) {
 							if (res.code == 0) {
