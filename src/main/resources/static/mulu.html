@@ -31,15 +31,16 @@
 
 		a:hover {
 			color: #527ea0;
-			;
 		}
 
-		li:hover {
+		tr:hover {
 			cursor: pointer;
+			background-color: antiquewhite;
 		}
-		li{
-			display: flex;
-			justify-content: space-between;
+		table{
+			width: 100%;
+			table-layout: fixed;
+			border-collapse: collapse;
 		}
 	</style>
 	<body>
@@ -62,7 +63,7 @@
 							</div>
 							<div class="weui-cell weui-cell_active " id="zixun" style="display: none;">
 								<div class="weui-cell__bd">
-									<ul id="zixunul"></ul>
+									<table id="zixunul"></table>
 								</div>
 							</div>
 							<div class="weui-cell weui-cell_active">
@@ -74,9 +75,9 @@
 
 							<div class="weui-cell weui-cell_active " id="need" style="display: none;">
 								<div class="weui-cell__bd">
-									<ul id="needul">
+									<table id="needul">
 
-									</ul>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -140,12 +141,12 @@
 							// 		'<sapn >' + satus+'</span>\n' +
 							// 		'<i class="icon iconfont icon-icon-test2" style="float: right;" </i>\n' +
 							// 		'</li></a>');
-							var zixunulli = $('<a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><li>\n'+
-									'<span >'+data.data[i].author +'</span>\n' +
-									'<span >'+date+'</span>\n' +
-									'<span >'+satus+'</span>\n'+
-									'<i class="icon iconfont icon-icon-test2"</i>\n' +
-									'</li></a>');
+							var zixunulli = $('<tr>\n'+
+									'<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+data.data[i].author +'</span></a></td>\n' +
+									'<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+date+'</span></a></td>\n' +
+									'<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+satus+'</span></a></td>\n'+
+									'<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><i class="icon iconfont icon-icon-test2" style="float: right" </i></a></td>\n' +
+									'</tr>');
 							// var zixunulli=$('<p>sdaf sf</p>')
 							console.log(zixunulli)
 							sjb.append(zixunulli);
