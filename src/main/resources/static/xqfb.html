@@ -240,6 +240,7 @@
 					wayValue.push($('.elseEx')[0].value)
 				}
 				message.hope = wayValue;
+				message.type=0;
 				let mess = JSON.stringify(message)
 				$.ajax({
 					type: 'POST',
