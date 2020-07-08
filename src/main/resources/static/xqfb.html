@@ -240,12 +240,12 @@
 					wayValue.push($('.elseEx')[0].value)
 				}
 				message.hope = wayValue;
-
+				let mess = JSON.stringify(message)
 				$.ajax({
 					type: 'POST',
 					//这里是提交需求发布的新数据
 					url: '/createfeedback',
-					data: message,
+					data: mess,
 					success: (function(res) {
 						if (res.code == 0) {
 							weui.toast('提交成功', 3000);
