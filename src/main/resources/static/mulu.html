@@ -37,6 +37,10 @@
 		li:hover {
 			cursor: pointer;
 		}
+		li{
+			display: flex;
+			justify-content: space-between;
+		}
 	</style>
 	<body>
 		<!-- <i class="icon iconfont icon-icon-test" ></i>  箭头朝上	
@@ -130,11 +134,17 @@
 							//页面要显示的状态码
 							let satus=data.data[i].status?'已读':'未读';
 							//
-							var zixunulli = $('<a href="' + ym + '.html?id=' + data.data[i].nid + '"><li>' +
-									'<sapn >' + data.data[i].content +'</span>\n' +
-									'<sapn >' + date +'</span>\n' +
-									'<sapn >' + satus+'</span>\n' +
-									'<i class="icon iconfont icon-icon-test2" style="float: right;" </i>' +
+							// var zixunulli = $('<a href="' + ym + '.html?id=' + data.data[i].nid +'"><li>\n' +
+							// 		'<sapn >' + data.data[i].content +'</span>\n' +
+							// 		'<sapn >' + date +'</span>\n' +
+							// 		'<sapn >' + satus+'</span>\n' +
+							// 		'<i class="icon iconfont icon-icon-test2" style="float: right;" </i>\n' +
+							// 		'</li></a>');
+							var zixunulli = $('<a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><li>\n'+
+									'<span >'+data.data[i].author +'</span>\n' +
+									'<span >'+date+'</span>\n' +
+									'<span >'+satus+'</span>\n'+
+									'<i class="icon iconfont icon-icon-test2"</i>\n' +
 									'</li></a>');
 							// var zixunulli=$('<p>sdaf sf</p>')
 							console.log(zixunulli)

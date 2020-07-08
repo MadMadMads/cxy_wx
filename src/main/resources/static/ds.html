@@ -119,7 +119,7 @@
 				message.tel = $('.phone')[0].value;
 				message.email = $('.email')[0].value;
 				message.content = $('.adviance')[0].value;
-				message.type = 0;
+				message.type = 5;
 				let mess = JSON.stringify(message)
 				$.ajax({
 					type: 'POST',
