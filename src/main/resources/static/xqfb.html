@@ -269,7 +269,7 @@
 					}),
 					error: (function() {
 						weui.alert('发送数据失败');
-						console.log(message)
+						// console.log(message)
 					}),
 
 
@@ -279,7 +279,7 @@
 			function ChangeChec(put, che) {
 				let put1 = document.getElementsByClassName(put)[0].value;
 				let che1 = document.getElementsByClassName(che)[0];
-				console.log(put1, che1)
+				// console.log(put1, che1)
 				if (put1) {
 					che1.checked = "true"
 				} else {
@@ -296,7 +296,7 @@
 			weui.form.checkIfBlur('#form', regexp);
 			document.querySelector('#formSubmitBtn').addEventListener('click', function() {
 				weui.form.validate('#form', function(error) {
-					console.log(error);
+					// console.log(error);
 					if (!error) {
 						postMessage()
 					}
@@ -306,7 +306,7 @@
 			//如果是点击查看详情页面,刚进来就要加载数据
 
 			$(function() {
-				console.log("ldkfsjgisfd")
+				// console.log("ldkfsjgisfd")
 				var url = window.location.search;
 				var urlPa = getUrlParam(url);
 				let id={};

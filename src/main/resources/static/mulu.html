@@ -111,10 +111,10 @@
 		var upDown = $('.upDown');
 		//目录控制上下
 		function changeDir(e) {
-			console.log(e)
+			// console.log(e)
 			var zixun = $('#' + e);
 			var zixun1 = $('.' + e);
-			console.log(zixun1, 111)
+			// console.log(zixun1, 111)
 			if (zixun.css("display") == "none") {
 				zixun.css("display", "block");
 				zixun1.find("i").removeClass("icon-icon-test").addClass('icon-icon-test1')
@@ -186,7 +186,8 @@
 							//页面要显示的时间
 							let time=new Date(parseInt(data.data[i].time+'000'));
 							let date=[time.getFullYear()+'年',time.getMonth()+1+'月',time.getDate()+'日'].join('');
-							//页面要显示的状态码
+                            // console.log(zixunulli)
+                            //页面要显示的状态码
 							let satus=data.data[i].status?'已读':'未读';
 							var zixunulli = $('<tr>\n'+
 									'<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+data.data[i].author +'</span></a></td>\n' +
@@ -196,7 +197,6 @@
 									'<a  href="' + ym + '.html?id=' + data.data[i].nid +'"  class="weui-btn weui-btn_mini weui-btn_primary"  style="float: right;width: 40%;" ><i class="icon iconfont icon-icon-test2" >详情</i></a></td>\n' +
 									'</tr>');
 							// var zixunulli=$('<p>sdaf sf</p>')
-							console.log(zixunulli)
 							sjb.append(zixunulli);
 						}
 					} else if (data.code == 1001) {

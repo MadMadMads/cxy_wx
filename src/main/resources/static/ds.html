@@ -159,7 +159,7 @@
 			weui.form.checkIfBlur('#form', regexp);
 			document.querySelector('#formSubmitBtn').addEventListener('click', function() {
 				weui.form.validate('#form', function(error) {
-					console.log(error);
+					// console.log(error);
 					if (!error) {
 						postMess()
 					}
