@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <title>建议与反馈 </title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.0/weui.min.css">
-    <script type="text/javascript" src="../../js/axios.min.js" >></script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1923225_h0rvh6ccah.css" />
-    <!-- 			<script src="../../js/util.js"></script>-->
+    <script type="text/javascript" src="../../js/axios.min.js" ></script>
+<!--    <script src="../../js/util.js"></script>-->
 </head>
 <style>
     html,
@@ -31,11 +31,25 @@
 
     a:hover {
         color: #527ea0;
-    ;
     }
 
-    li:hover {
+    tr:hover {
         cursor: pointer;
+        background-color: antiquewhite;
+    }
+    table{
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+    .tableTh{
+        color: #74848c;
+        text-align: justify;
+        background-color: white;
+        margin-top: 10px;
+    }
+    .tableTh:hover{
+        background-color: white !important;
     }
 </style>
 <body>
@@ -58,7 +72,14 @@
                     </div>
                     <div class="weui-cell weui-cell_active " id="zixun" style="display: none;">
                         <div class="weui-cell__bd">
-                            <ul id="zixunul"></ul>
+                            <table id="zixunul">
+                                <tr class="tableTh">
+                                    <th>董事姓名</th>
+                                    <th>提交日期</th>
+                                    <th>是否已读</th>
+                                    <th style="text-align: center;">操作</th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div class="weui-cell weui-cell_active">
@@ -70,9 +91,14 @@
 
                     <div class="weui-cell weui-cell_active " id="need" style="display: none;">
                         <div class="weui-cell__bd">
-                            <ul id="needul">
-
-                            </ul>
+                            <table id="needul">
+                                <tr class="tableTh">
+                                    <th>董事姓名</th>
+                                    <th>提交日期</th>
+                                    <th>是否已读</th>
+                                    <th style="text-align: center;">操作</th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -83,7 +109,7 @@
 </body>
 <script>
     var upDown = $('.upDown');
-
+    //目录控制上下
     function changeDir(e) {
         // console.log(e)
         var zixun = $('#' + e);
@@ -97,41 +123,93 @@
             zixun1.find("i").removeClass("icon-icon-test1").addClass('icon-icon-test')
         }
     };
+    //点击删除按钮进行删除
+    function deleteData(e,data){
+        let delData=JSON.stringify({"dataid":data})
+        $.ajax({
+            type: 'delete',
+            data:delData,
+            url:'/deletefeedback',
+            dataType:'json',
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                //code就是成功
+                if (data.code == 0) {
+                    e.parentNode.parentNode.remove()
+                    weui.alert("删除成功")
+                } else if (data.code == 1001) {
+                    weui.alert(data.message)
+                } else if (data.code == 30001) {
+                    weui.alert(data.message)
+                } else if (rdata.code == 30012) {
+                    weui.alert(data.message)
+                } else if (data.code == 30011) {
+                    weui.alert(data.message)
+                } else {
+                    weui.alert("未知错误")
+                }
+            },
+            error: (function() {
+                weui.alert('该条数据删除失败')
+            }),
+        })
+
+    }
+
     //页面刚进来就向后端发送请求,挂在数据
     $(function() {
+        var message = {};
+        let mess = JSON.stringify(message)
         $.ajax({
-            type: 'get',
+            type: 'POST',
+            data: mess,
             //获取董事和咨询的所有信息(目录）)
-            url: '../../json/w.json',
+            url: '/feedback',
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(data) {
+                //code就是成功
+                if (data.code == 0) {
+                    for (let i = 0; i < data.data.length; i++) {
+                        //需要罗智告诉我是那一张表,进行判断,ym控制董事表还是咨询表
+                        // debugger
+                        var sjb;
+                        var ym;
+                        if (data.data[i].type == 5) {
+                            sjb = $("#zixunul");
+                            ym = 'ds';
 
-                // console.log(data, data[0].name, data[0].code, data.length);
-                for (let i = 0; i < data.length; i++) {
-                    //需要罗智告诉我是那一张表,进行判断,ym控制董事表还是咨询表
-                    // debugger
-                    var sjb;
-                    var ym;
-                    // console.log(zixunulli)
-
-                    if (data[i].type == 5) {
-                        sjb = $("#zixunul");
-                        ym = 'ds';
-
-                    } else {
-                        sjb = $("#needul");
-                        ym = 'xqfb';
+                        } else {
+                            sjb = $("#needul");
+                            ym = 'xqfb';
+                        }
+                        //页面要显示的时间
+                        let time=new Date(parseInt(data.data[i].time+'000'));
+                        let date=[time.getFullYear()+'年',time.getMonth()+1+'月',time.getDate()+'日'].join('');
+                        // console.log(zixunulli)
+                        //页面要显示的状态码
+                        let satus=data.data[i].status?'已读':'未读';
+                        var zixunulli = $('<tr>\n'+
+                            '<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+data.data[i].author +'</span></a></td>\n' +
+                            '<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+date+'</span></a></td>\n' +
+                            '<td><a  href="' + ym + '.html?id=' + data.data[i].nid +'" ><span >'+satus+'</span></a></td>\n'+
+                            '<td> <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_warn"  style="width: 40%;" onclick="deleteData(this,'+data.data[i].nid+')">删除</a>' +
+                            '<a  href="' + ym + '.html?id=' + data.data[i].nid +'"  class="weui-btn weui-btn_mini weui-btn_primary"  style="float: right;width: 40%;" ><i class="icon iconfont icon-icon-test2" >详情</i></a></td>\n' +
+                            '</tr>');
+                        // var zixunulli=$('<p>sdaf sf</p>')
+                        sjb.append(zixunulli);
                     }
-                    var zixunulli = $('<li><a href="' + ym + '.html?id=' + data[i].id + '">\n'+
-
-                        '<span >'+data[i].content +'</span>\n' +
-                        '<span>'+data[i].content+'</span>\n'+
-                        '<span>'+data[i].content+'</span>\n'+
-                        '</a><i class="icon iconfont icon-icon-test2" style="float: right;" ></i></li>');
-                    // var zixunulli=$('<p>sdaf sf</p>')
-                    sjb.append(zixunulli);
+                } else if (data.code == 1001) {
+                    weui.alert(data.message)
+                } else if (data.code == 30001) {
+                    weui.alert(data.message)
+                } else if (rdata.code == 30012) {
+                    weui.alert(data.message)
+                } else if (data.code == 30011) {
+                    weui.alert(data.message)
+                } else {
+                    weui.alert("未知错误")
                 }
-
             },
             error: (function() {
                 weui.alert('该条数据获取失败')
