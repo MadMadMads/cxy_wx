@@ -59,7 +59,7 @@ function postUserInfo(userinfo) {
 	let xmlhttp = new XMLHttpRequest(); //获取对象
 	xmlhttp.open("POST", url);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-	xmlhttp.send(userinfo); //POST请求
+	xmlhttp.send(JSON.stringify(userinfo)); //POST请求
 }
 //对url进行解析,得到一个参数数组
 function getUrlParam(url) {
