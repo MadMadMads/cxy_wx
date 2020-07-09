@@ -147,7 +147,7 @@
                 var resp = res.responseText;
                 var reg = /<pre.+?>(.+)<\/pre>/g;
                 var result = resp.match(reg);
-                console.log(11, res, result);
+                // console.log(11, res, result);
                 weui.alert('提交失败')
             }),
 
@@ -164,7 +164,7 @@
     weui.form.checkIfBlur('#form', regexp);
     document.querySelector('#formSubmitBtn').addEventListener('click', function() {
         weui.form.validate('#form', function(error) {
-            console.log(error);
+            // console.log(error);
             if (!error) {
                 postMess()
             }

@@ -19,7 +19,7 @@ window.onload = function() {
 	if (localStorage.getItem("userinfo")) return; // 已经授权登录过的就不用再授权了
 	if (params.code) {
 		code = params.code;
-		console.log(params.code)
+		// console.log(params.code)
 		getAccessToken(code);
 	} else {
 		window.location.href = authURL;
@@ -50,7 +50,7 @@ function getUserInfo(access_token, open_id) {
 	}).then(async function(res) {
 		userinfo = await res.data;
 		userinfo.page=getPage()
-		console.log(res.data, userinfo, 111)
+		// console.log(res.data, userinfo, 111)
 		postUserInfo(userinfo);
 		window.localStorage.setItem('userinfo', JSON.stringify(userinfo))
 	})

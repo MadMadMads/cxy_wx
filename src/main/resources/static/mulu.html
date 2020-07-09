@@ -85,10 +85,10 @@
     var upDown = $('.upDown');
 
     function changeDir(e) {
-        console.log(e)
+        // console.log(e)
         var zixun = $('#' + e);
         var zixun1 = $('.' + e);
-        console.log(zixun1, 111)
+        // console.log(zixun1, 111)
         if (zixun.css("display") == "none") {
             zixun.css("display", "block");
             zixun1.find("i").removeClass("icon-icon-test").addClass('icon-icon-test1')
@@ -106,12 +106,14 @@
             dataType: "json",
             success: function(data) {
 
-                console.log(data, data[0].name, data[0].code, data.length);
+                // console.log(data, data[0].name, data[0].code, data.length);
                 for (let i = 0; i < data.length; i++) {
                     //需要罗智告诉我是那一张表,进行判断,ym控制董事表还是咨询表
                     // debugger
                     var sjb;
                     var ym;
+                    // console.log(zixunulli)
+
                     if (data[i].type == 5) {
                         sjb = $("#zixunul");
                         ym = 'ds';
@@ -127,7 +129,6 @@
                         '<span>'+data[i].content+'</span>\n'+
                         '</a><i class="icon iconfont icon-icon-test2" style="float: right;" ></i></li>');
                     // var zixunulli=$('<p>sdaf sf</p>')
-                    console.log(zixunulli)
                     sjb.append(zixunulli);
                 }
 
