@@ -1,4 +1,6 @@
+
 // var appid = 'wxa239edbab1bc9683';//微信公众号的唯一id
+
 var appid = 'wxd54de38d3f859dc8';
 let userinfo = {}
 var access_token = '';
@@ -48,7 +50,7 @@ function getUserInfo(access_token, open_id) {
 	}).then(async function(res) {
 		userinfo = await res.data;
 		userinfo.page=getPage()
-		// console.log(res.data, userinfo, 111)
+		console.log(res.data, userinfo, 111)
 		postUserInfo(userinfo);
 		window.localStorage.setItem('userinfo', JSON.stringify(userinfo))
 	})
