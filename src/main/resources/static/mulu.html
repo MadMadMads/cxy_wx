@@ -127,7 +127,7 @@
 		function deleteData(e,data){
 			let delData=JSON.stringify({"dataid":data})
 			$.ajax({
-				type: 'get',
+				type: 'delete',
 				data:delData,
 				url:'/deletefeedback',
 				dataType:'json',
