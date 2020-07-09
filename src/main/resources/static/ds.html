@@ -202,12 +202,12 @@
 						contentType: "application/json; charset=utf-8",
 						success: (function(res) {
 							if (res.code == 0) {
-								$(".name")[0].value = res.data[0].author;
+								$(".name")[0].value = res.data[0].author||'无';
 								$(".job")[0].value = res.data[0].job||'无' ;
-								$(".uint")[0].value = res.data[0].cidname;
-								$(".phone")[0].value = res.data[0].tel;
+								$(".uint")[0].value = res.data[0].cidname||'无';
+								$(".phone")[0].value = res.data[0].tel||'无';
 								$(".email")[0].value = res.data[0].email||'无';
-								$(".adviance")[0].value = res.data[0].content;
+								$(".adviance")[0].value = res.data[0].content||'无'	;
 							} else if (res.code == 1001) {
 								weui.alert(res.message)
 							} else if (res.code == 30001) {

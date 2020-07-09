@@ -327,16 +327,16 @@
 						url: '/feedback',
 						success: (function(data) {
 							if (data.code == 0) {
-								$('.unitName')[0].value = data.data[0].cidname;
+								$('.unitName')[0].value = data.data[0].cidname||'无';
 								$('.address')[0].value = data.data[0].cidaddress||'无';
-								$('.name')[0].value = data.data[0].author;
+								$('.name')[0].value = data.data[0].author||'无';
 								$('.job')[0].value = data.data[0].job||'无';
-								$('.phone')[0].value = data.data[0].tel;
+								$('.phone')[0].value = data.data[0].tel||'无';
 								$('.email')[0].value = data.data[0].email||'无';
 								$('.resume')[0].value = data.data[0].cidmemo||'无';
-								$('.techNeeds')[0].value = data.data[0].needname;
-								$('.money')[0].value = data.data[0].money||'无';
-								$('.techDec')[0].value = data.data[0].need;
+								$('.techNeeds')[0].value = data.data[0].needname||'无';
+								$('.money')[0].value = data.data[0].money||'-1';
+								$('.techDec')[0].value = data.data[0].need||'无';
 								//将数字的范围去掉
 								$(".weui-textarea-counter").each(
 									function() {
@@ -355,12 +355,14 @@
 								//第一个选择的
 								let areadiv = $('#areadiv');
 								areadiv.css("display", "none");
-								var areadivNew = $('<p style="margin-left:1%">' +  data.data[0].needId + '</p>');
+								let data1=data.data[0].needId ||'无';
+								var areadivNew = $('<p style="margin-left:1%">' + data1  + '</p>');
 								$('#areadivpa').append(areadivNew);
 								//第二个选择的
 								let waydiv = $('#waydiv')
 								waydiv.css("display", "none");
-								var waydivNew = $('<p style="margin-left:1%">' + data.data[0].hope + '</p>');
+								let data2=data.data[0].hope||'无'
+								var waydivNew = $('<p style="margin-left:1%">' + data2+ '</p>');
 								$('#waydivpa').append(waydivNew);
 							} else if (data.code == 1001) {
 								weui.alert(res.message)
