@@ -106,6 +106,9 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setFilters(filters);
         //拦截链
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
+        filterChainDefinitionMap.put("/image/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/**", "jwtFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

@@ -1,5 +1,5 @@
-// var appid = 'wxa239edbab1bc9683';//微信公众号的唯一id
-var appid = 'wxd54de38d3f859dc8';
+var appid = 'wxa239edbab1bc9683';//微信公众号的唯一id
+// var appid = 'wxd54de38d3f859dc8';
 let userinfo = {}
 var access_token = '';
 var open_id = '';
@@ -12,16 +12,19 @@ let uri = encodeURIComponent(link);
 let authURL =`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${uri}&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
 
 window.onload = function() {
-	let params = getUrlParam(window.location.search); // 地址解析
+	let params = getUrlParam(window.location.search); // 地址解析,返回地址后面的东西，找出code
 	// window.localStorage.removeItem('userinfo')
 	if (localStorage.getItem("userinfo")) return; // 已经授权登录过的就不用再授权了
 	if (params.code) {
+		debugger
 		code = params.code;
 		// console.log(params.code)
 		getAccessToken(code);
 	} else {
+			debugger
+		console.log(link);
 		window.location.href = authURL;
-		// debugger
+
 	}
 }
 //获取token
@@ -31,7 +34,8 @@ function getAccessToken(code) {
 		`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${appSerect}&code=${code}&grant_type=authorization_code`;
 	axios({
 		method: 'get',
-		url: getAccessUrl
+		url: getAccessUrl,
+		dataType:'jsonp',
 	}).then(async function(res) {
 		access_token = await res.data.access_token;
 		open_id = await res.data.openid;
@@ -44,11 +48,12 @@ function getUserInfo(access_token, open_id) {
 	let getUserUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${open_id}&lang=zh_CN`;
 	axios({
 		method: 'get',
-		url: getUserUrl
+		url: getUserUrl,
+		dataType:'jsonp',
 	}).then(async function(res) {
 		userinfo = await res.data;
 		userinfo.page=getPage()
-		// console.log(res.data, userinfo, 111)
+		console.log(res.data, userinfo, 111)
 		postUserInfo(userinfo);
 		window.localStorage.setItem('userinfo', JSON.stringify(userinfo))
 	})
