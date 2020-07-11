@@ -7,6 +7,7 @@ import com.cxy.model.entity.User;
 import com.cxy.service.UserService;
 
 import com.cxy.util.JWTUtil;
+import com.cxy.util.RedisUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
@@ -96,7 +97,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String userName = JWTUtil.getUsername(oldToken);
         String key = Constant.JWT_TOKEN + userName;
         //获取redis tokenStr
-        String redisUserInfo = (String) redisTemplate.opsForValue().get(key);
+        String redisUserInfo = (String) RedisUtils.get(key);
         if (redisUserInfo != null) {
             if (oldToken.equals(redisUserInfo)) {
                 User vo = this.userService.getUserByUserName(userName);

@@ -6,6 +6,7 @@ import com.cxy.config.shiro.JWTToken;
 import com.cxy.model.entity.User;
 import com.cxy.service.UserService;
 import com.cxy.util.JWTUtil;
+import com.cxy.util.RedisUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -74,7 +75,7 @@ public class MyRealm extends AuthorizingRealm {
         // 解密获得userName，用于和数据库进行对比
         String userName = JWTUtil.getUsername(token);
         User vo = this.userService.getUserByUserName(userName);
-        String redisUserInfo = (String) redisTemplate.opsForValue().get("token_jwt_" + userName);
+        String redisUserInfo = (String) RedisUtils.get("token_jwt_" + userName);
 
         Map result = JWTUtil.verify(token, userName, vo.getPassword());
         Exception exception = (Exception) result.get("exception");

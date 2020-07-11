@@ -1,14 +1,20 @@
 package com.cxy.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cxy.common.enums.ResultStatus;
 import com.cxy.common.resultbean.ResultMsg;
 import com.cxy.model.entity.User;
 import com.cxy.service.UserService;
 import com.cxy.util.JWTUtil;
+import com.cxy.util.RedisUtils;
 import com.cxy.util.SignUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +23,7 @@ import sun.misc.BASE64Encoder;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,12 +39,16 @@ import java.util.Map;
  */
 @Slf4j
 @Controller
+@AllArgsConstructor
+@CrossOrigin()
 public class UserController {
 
     @Autowired
     DefaultKaptcha producer;
     @Autowired
     private UserService userService;
+    private final WxMpService wxMpService;
+
 
     /**
      * 登录
@@ -58,22 +69,50 @@ public class UserController {
         return ResultMsg.build();
     }
 
+    @GetMapping("/welcome/{page}")
+    public String welcome(@PathVariable("page") String page,HttpServletRequest request,HttpServletResponse response) throws IOException {
+       String url = "http://i8gs8h.natappfree.cc/wxUserLogin";
+       String redirectURL = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, page);
+       log.info("【微信网页授权】获取code,redirectURL={}", redirectURL);
+       return "redirect:" + redirectURL;
+    }
+
     /**
      * 微信匿名登录
      *
-     * @param userInfo
+     * @param
      * @return
      */
-    @RequestMapping(value = "/wxUserLogin", method = RequestMethod.POST)
-    public String userLogin(@RequestBody JSONObject userInfo, HttpServletResponse response) {
-        User user = userService.getUserByOpenId(userInfo.getString("openid"));
+    @GetMapping(value = "/wxUserLogin")
+    public String userLogin(@RequestParam("code") String code,
+                            @RequestParam("state") String returnUrl,HttpServletResponse response) {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = (WxMpOAuth2AccessToken)RedisUtils.get("code");
+        if (wxMpOAuth2AccessToken == null) {
+            try {
+                //  拿token
+                wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+                RedisUtils.set("code",wxMpOAuth2AccessToken,6);
+                // 3.进一步获取用户信息
+                String openId = wxMpOAuth2AccessToken.getOpenId();
+            } catch (WxErrorException e) {
+                e.printStackTrace();
+            }
+        }
+        // 拿到用户的基本信息
+        WxMpUser wxMpUser=null;
+        try {
+            wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+        User user = userService.getUserByOpenId(wxMpUser.getOpenId());
         if (user == null) {
-            return "redirect:" + userInfo.getString("page") + ".html";
+            return "redirect:" + returnUrl + ".html";
         } else {
-            String tokenStr = JWTUtil.sign(user.getOpenid(), "");
+            String tokenStr = JWTUtil.sign(user.getOpenid(), user.getOpenid());
             userService.addTokenToRedis(user.getOpenid(), tokenStr);
             response.setHeader("Authorization", tokenStr);
-            return "redirect:mulu.html";
+            return "redirect:index.html";
         }
     }
 

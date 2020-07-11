@@ -10,6 +10,7 @@ import com.cxy.model.entity.User;
 import com.cxy.model.entity.UserDTO;
 import com.cxy.service.UserService;
 import com.cxy.util.JWTUtil;
+import com.cxy.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -99,10 +100,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+
     @Override
     public void addTokenToRedis(String userName, String jwtTokenStr) {
         String key = Constant.JWT_TOKEN + userName;
-        redisTemplate.opsForValue().set(key, jwtTokenStr, refreshJwtTokenExpireTime, TimeUnit.MINUTES);
+        RedisUtils.set(key, jwtTokenStr, refreshJwtTokenExpireTime);
     }
 
     @Override

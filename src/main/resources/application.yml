@@ -1,0 +1,7 @@
+wx:
+  mp:
+    configs:
+      - appId: wxa239edbab1bc9683
+        secret: cf701651a01eedcc4b592309276be976
+        token: mytoken
+        aesKey: xMpw0iJHtofpCf0h8NlvS7RpHTTjlISa71kQnv7DpWE
