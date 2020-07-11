@@ -1,12 +1,16 @@
 package com.cxy.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cxy.common.enums.ResultStatus;
 import com.cxy.common.resultbean.ResultMsg;
 import com.cxy.model.entity.User;
 import com.cxy.model.entity.UserDTO;
 import com.cxy.service.UserService;
 import com.cxy.util.JWTUtil;
+import com.cxy.util.SignUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,7 @@ import java.util.Map;
  * @time: 2020/6/17 20:18
  * Modified By:
  */
+@Slf4j
 @Controller
 public class UserController {
 
@@ -38,6 +43,7 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param userInfo
      * @return
      */
@@ -56,17 +62,32 @@ public class UserController {
 
     /**
      * 微信匿名登录
+     *
      * @param userInfo
      * @return
      */
     @RequestMapping(value = "/wxUserLogin", method = RequestMethod.POST)
-    public String  userLogin(@RequestBody UserDTO userInfo, HttpServletResponse response) {
-        UserDTO user = userService.getUserByNickName(userInfo.getNickName(),userInfo.getUrl());
-        if (user ==null) {return "redirect:"+userInfo.getUrl()+".html";} else {
-            String tokenStr = JWTUtil.sign(user.getNickName(), "");
-            userService.addTokenToRedis(user.getNickName(), tokenStr);
+    public String userLogin(@RequestBody JSONObject userInfo, HttpServletResponse response) {
+        User user = userService.getUserByOpenId(userInfo.getString("openid"));
+        if (user == null) {
+            return "redirect:" + userInfo.getString("page") + ".html";
+        } else {
+            String tokenStr = JWTUtil.sign(user.getOpenid(), "");
+            userService.addTokenToRedis(user.getOpenid(), tokenStr);
             response.setHeader("Authorization", tokenStr);
             return "redirect:mulu.html";
+        }
+    }
+
+    @GetMapping(value = "/wxValidate")
+    public void wxValidate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String signature = request.getParameter("signature");
+        String timestamp = request.getParameter("timestamp");
+        String nonce = request.getParameter("nonce");
+        String echostr = request.getParameter("echostr");
+        log.info("signature[{}], timestamp[{}], nonce[{}], echostr[{}]", signature, timestamp, nonce, echostr);
+        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+            response.getOutputStream().println(echostr);
         }
     }
 
@@ -106,7 +127,7 @@ public class UserController {
             Map<String, Object> map = new HashMap<>();
             //保存到redis
             String temp = userService.createRandomToken(text);
-            map.put("token",temp);
+            map.put("token", temp);
             map.put("img", encoder.encode(outputStream.toByteArray()));
             result.setData(temp);
         } catch (Exception e) {

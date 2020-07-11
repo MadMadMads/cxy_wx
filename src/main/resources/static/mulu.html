@@ -8,7 +8,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1923225_h0rvh6ccah.css" />
     <script type="text/javascript" src="../../js/axios.min.js" ></script>
-<!--    <script src="../../js/util.js"></script>-->
+    <script src="../../js/util.js"></script>
 </head>
 <style>
     html,
@@ -125,12 +125,12 @@
     };
     //点击删除按钮进行删除
     function deleteData(e,data){
-        let delData=JSON.stringify({"dataid":data})
+        // let delData=JSON.stringify({"dataid":data})
         $.ajax({
             type: 'delete',
-            data:delData,
-            url:'/deletefeedback',
-            dataType:'json',
+            // data:delData,
+            url:'/feedback/'+ data,
+            // dataType:'json',
             contentType: "application/json; charset=utf-8",
             success: function(data) {
                 //code就是成功

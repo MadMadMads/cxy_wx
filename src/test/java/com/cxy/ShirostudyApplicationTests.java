@@ -18,11 +18,11 @@ import java.util.List;
 class ShirostudyApplicationTests {
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
     @Autowired
     CooperationService cooperationService;
     @Test
     void t1() {
-        System.out.println(cooperationService.findListNews(new News()));
+        System.out.println(userService.getUserByOpenId("oCFNmweaI2uIDL8YSFD6diTt0sK4"));
     }
 }

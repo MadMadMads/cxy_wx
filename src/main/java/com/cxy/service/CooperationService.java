@@ -20,4 +20,6 @@ public interface CooperationService {
     List<News> findListNews(News news);
 
     News findNews(News news);
+
+    void deleteNew(Integer news);
 }

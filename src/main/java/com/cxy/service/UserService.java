@@ -19,7 +19,7 @@ public interface UserService {
 
     User getUserByUserName(String userName);
 
-    UserDTO getUserByNickName(String nickName,String url);
+    User getUserByOpenId(String openId);
 
     Map<String, Object> getRolesAndPermissionsByUserName(String userName);
 

@@ -38,12 +38,24 @@ public class CooperationController {
     }
     @PostMapping("/createfeedback")
     @ResponseBody
-    public ResultMsg<String> createfeedback (@RequestBody JSONObject jsonObject, User user, HttpServletResponse response){
+    public ResultMsg<String> createFeedback (@RequestBody JSONObject jsonObject, User user, HttpServletResponse response){
         ResultMsg<String> result = ResultMsg.build();
         if (jsonObject == null) {
             return (ResultMsg<String>)result.withError("表单不存在");
         }
         cooperationService.createNews(jsonObject,user);
+        return result;
+    }
+
+    //@RequiresRoles("管理员")
+    @DeleteMapping("/feedback/{nid}")
+    @ResponseBody
+    public ResultMsg<String> deleteFeedback (@PathVariable("nid")Integer nid, User user, HttpServletResponse response){
+        ResultMsg<String> result = ResultMsg.build();
+        if (nid == null) {
+            return (ResultMsg<String>)result.withError("请选中删除项");
+        }
+        cooperationService.deleteNew(nid);
         return result;
     }
 }

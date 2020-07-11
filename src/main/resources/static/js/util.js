@@ -1,12 +1,10 @@
-
 // var appid = 'wxa239edbab1bc9683';//微信公众号的唯一id
-
 var appid = 'wxd54de38d3f859dc8';
 let userinfo = {}
 var access_token = '';
 var open_id = '';
 // var appSerect='06a8e07356dd978df4f7df396b4283e0'  //AppSecret
-var appSerect = '80d343c8f93afa51296b91cded00bdce' //AppSecret
+var appSerect = 'cf701651a01eedcc4b592309276be976' //AppSecret
 var code = '';
 let link = window.location.href;
 let page='';
@@ -57,11 +55,11 @@ function getUserInfo(access_token, open_id) {
 }
 //向后端发送用户数据
 function postUserInfo(userinfo) {
-	let url = '';
+	let url = '/wxUserLogin';
 	let xmlhttp = new XMLHttpRequest(); //获取对象
 	xmlhttp.open("POST", url);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-	xmlhttp.send(JSON.stringify(userinfo)); //POST请求
+	xmlhttp.send(userinfo); //POST请求
 }
 //对url进行解析,得到一个参数数组
 function getUrlParam(url) {

@@ -43,9 +43,9 @@ public class CooperationServiceImpl implements CooperationService {
     @Override
     public List<News> findListNews(News news) {
         QueryWrapper queryWrapper = new QueryWrapper<>(news).or(news != null).like(!StringUtils.isEmpty(news.getTitle()),"title",news.getTitle()).orderByAsc("status").orderByDesc("_time");
-        if (news != null) {
+        if (news.getNid() != null) {
             UpdateWrapper updateWrapper = new UpdateWrapper<>(news).or(news != null).like(!StringUtils.isEmpty(news.getTitle()),"title",news.getTitle());
-            News news1  = new News();
+            News news1 = new News();
             news1.setStatus((byte) 1);
             newsMapper.update(news1,updateWrapper);
         }
@@ -56,6 +56,11 @@ public class CooperationServiceImpl implements CooperationService {
     public News findNews(News news) {
         QueryWrapper queryWrapper = new QueryWrapper<>(news);
         return newsMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public void deleteNew(Integer nid) {
+        newsMapper.deleteById(nid);
     }
 
     private String trimFirstAndLastChar(String source) {

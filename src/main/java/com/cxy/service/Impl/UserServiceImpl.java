@@ -50,13 +50,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByNickName(String nickName,String url) {
+    public User getUserByOpenId(String openId) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("nick_name", nickName);
+        queryWrapper.eq("openid", openId);
         User user = userMapper.selectOne(queryWrapper);
         if (user == null) return null;
         else
-        return new UserDTO(user.getUid(),user.getNickName(),url);
+        return user;
     }
 
     @Override
