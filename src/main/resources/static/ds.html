@@ -9,11 +9,9 @@
     <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
     <script src="js/util.js"></script>
     <script src="js/axios.min.js"></script>
-<script src="js/jquery-3.2.1.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <link rel="stylesheet" href="css/global.css" />
-    <script type="text/javascript" src="js/util.js" ></script>
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1922682_b0autjedml9.css" />
-
 </head>
 <style>
     html,body{
@@ -172,10 +170,22 @@
     $(function() {
         var url = window.location.search;
         var urlPa = getUrlParam(url);
-        let id={};
-        id.nid=urlPa.id;
-        let nid = JSON.stringify(id);
+        //这是控制跳转的,并传送当前页面page(没有用户信息)
+        if(!window.localStorage.getItem("auth")){
+            //如果没有的话,有两种情况,一,重定向带了auth回来,而需要进行重定向
+            if('auth' in urlPa){
+                window.localStorage.setItem('auth',urlPa.auth)
+            }else{
+                let page=getPage();
+                let urlRe='服务器/loading.html?page='+page
+                window.location.href=urlRe
+            }
+        }
+        //这是正常进行操作
         if ('id' in urlPa) {
+            let id={};
+            id.nid=urlPa.id;
+            let nid = JSON.stringify(id);
             //给所有的input加一个disable属性
             $("input").attr("disabled", true);
             //将button的属性成不能提交
@@ -244,6 +254,12 @@
         };
         return params;
     };
+    function getPage() {
+        let patt1 = /\/([a-z]+)\.html/;
+        let urlPage = window.location.href;
+        arr = urlPage.match(patt1);
+        return arr[1]
+    }
 </script>
 </body>
 </html>
